@@ -195,6 +195,7 @@
                                         <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
                                         <div class="layui-timeline-content layui-text">
                                             <h3 class="layui-timeline-title">{{review.userName}}</h3>
+                                            <h3 class="layui-timeline-title"><a href="#">回复{{review.commentId}},{{review.userId}}</a></h3>
                                             <p>
                                                 {{review.reviewDetail}}
                                             </p>
@@ -279,7 +280,7 @@
         </div>
 
     </div>
-    <script src="/js/position_detail.js"></script>
+    <script type="text/javascript" th:src="@{/js/position_detail.js}"></script>
 </div>
 </body>
 </html>

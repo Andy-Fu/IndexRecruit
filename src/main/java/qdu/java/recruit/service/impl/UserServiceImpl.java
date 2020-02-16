@@ -111,9 +111,16 @@ public class UserServiceImpl implements UserService {
         BASE64Encoder base64en = new BASE64Encoder();
 
         //加密后的字符串
-        String encStr = base64en.encode(md5.digest(str.getBytes("utf-8")));
+      String encStr = base64en.encode(md5.digest(str.getBytes("utf-8")));
+      
         return encStr;
     }
+
+	@Override
+	public boolean updateImage(Integer userId, String image) {
+		// TODO Auto-generated method stub
+		return userMapper.updateImage(userId, image) > 0;
+	}
 
 
 }

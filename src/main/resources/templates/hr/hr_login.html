@@ -8,14 +8,15 @@
     <script src="/js/jquery.js"></script>
     <script src="/js/vue.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.3.4"></script>
+    <script src="/layer/layer.js"></script>
 </head>
 <body>
 <div class="login_box">
     <a class="go_home"       style="background-image: url(https://www.sxsimg.com/static/new_main/img/new_logo.png?v=750679c94f67c9843d75ac71fb642bf7)" href="/"></a>
-    <div class="switch_to_hr"><div class="switch_btn"><a class="btn_hr_login" href="/user/user_login">应聘登录</a></div></div>
-    <div class="login_form_content" id="loginForm">
-        <form name="login_form" id="">
-            <input type="text" id="user_name" name="user_name" placeholder="请输入用户名" v-model="form.userName"/>
+    <div class="switch_to_hr"><div class="switch_btn"><a class="btn_hr_login" href="/user/touser_login">应聘登录</a></div></div>
+    <div class="login_form_content" id="loginForm" >
+        <form name="login_form" id="loginForm" >
+                       <input type="text" id="user_name" name="user_name" placeholder="请输入用户名" v-model="form.userName"/>
             <label for="user_name"></label>
             <input type="password" id="user_pass" name="user_pass" placeholder="请输入密码" v-model="form.userPass"/>
             <label for="user_pass"></label>

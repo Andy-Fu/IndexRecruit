@@ -27,7 +27,9 @@ var box = new Vue({
                     $(msg.comList.list).each(function (key, val) {
                         box.reviews.push({
                             userName: val.nickname,
-                            reviewDetail: val.content.replace(/<[^>]+>/g,"")
+                            reviewDetail: val.content.replace(/<[^>]+>/g,""),//找到所有的<>标签替换为空格
+                            commentId: val.commentId,
+                           userId: val.userId
                         });
                     });
 

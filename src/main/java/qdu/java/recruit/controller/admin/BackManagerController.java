@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import qdu.java.recruit.entity.CompanyEntity;
 import qdu.java.recruit.entity.UserAreaEntity;
@@ -64,8 +65,9 @@ public class BackManagerController {
 
     @RequestMapping("/adminlogin")
     @ResponseBody
-    public Map<String,Object> login(Long username, String password){
-        Map<String,Object> map = new HashMap<>();
+    public Map<String,Object> login(@RequestParam("username") Long username, @RequestParam("password") String password){
+       System.out.println(username+"--->"+password);
+    	Map<String,Object> map = new HashMap<>();
         int result = backManagerService.backLogin(username, password);
         if (result==0){
             map.put("state","0");

@@ -21,7 +21,7 @@ function time(o) {
     }
 }
 
-function phone_varify_send() {
+/*function phone_varify_send() {
     var mobile = document.getElementById("tel");
 
     var tel = document.getElementById("tel").value;
@@ -42,14 +42,14 @@ function phone_varify_send() {
     } else {
         swal("哦哦....", "请输入正确的手机号哦!!!", "error");
     }
-}
+}*/
 
 function phone_varify_code() {
     var nickName = document.getElementById("name").value;
     var mobile = document.getElementById("tel");
     var pass = document.getElementById("password").value;
     var code_usr = document.getElementById("code").value;
-    if (code_usr.length == 4) {
+    if (code_usr.length == 6) {
         $.ajax({
             url: "http://localhost:8080/sms/verifyCode" + "?mobile=" + mobile.value + "&code=" + code_usr,
             type: "post",
@@ -102,7 +102,38 @@ function showPass() {
     }
 }
 
-
+var waitTime = 60;
+function getCode() {
+	let phone = $("#tel").val();
+	
+	time(this, phone);
+	$.ajax({
+		url : '/sms/regist/getCode',
+		type : 'post',
+		data : {
+			phone : phone
+		},
+		dataType : 'text',
+		success : function(rs) {
+			$("#msg").html(rs);
+		}
+	});
+	
+}
+function time(ele, value) {
+	if (waitTime == 0) {
+		ele.disabled = false;
+		ele.value = "获取验证码";
+		waitTime = 60;// 恢复计时
+	} else {
+		ele.disabled = true;
+		ele.value = waitTime + "秒后可以重新发送";
+		waitTime--;
+		setTimeout(function() {
+			time(ele)// 关键处-定时循环调用
+		}, 1000)
+	}
+}
 // window.onload=function(){
 // 	//
 // 	var name=document.getElementById("name").value;

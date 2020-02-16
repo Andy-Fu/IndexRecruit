@@ -5,8 +5,13 @@ import net.sf.json.JSONObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import cn.hongmao.util.RenamePhoto;
 import qdu.java.recruit.constant.GlobalConst;
 import qdu.java.recruit.controller.BaseController;
 import qdu.java.recruit.entity.*;
@@ -15,6 +20,9 @@ import qdu.java.recruit.service.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -28,8 +36,8 @@ import java.util.*;
  private int departmentId;
  </p>
  */
-@RestController
-@Api(value = "HR接口",description = "HR接口")
+@Controller
+
 public class HRController extends BaseController{
 
     protected Logger logger = LogManager.getLogger(getClass());
@@ -103,18 +111,20 @@ public class HRController extends BaseController{
      * @param password
      * @return
      */
-    @PostMapping(value = "hr/login")
-    public int userLogin(HttpSession httpSession,
-                         @RequestParam String mobile,
-                         @RequestParam String password) {
+    @PostMapping(value = "/hr/login")
+    @ResponseBody
+    public int userLogin(HttpSession httpSession, @RequestParam String userName, @RequestParam String userPass) {
 
-        if (mobile == null || password == null) {
+    	System.out.println(userName+"---->"+userPass);
+        if (userName == null || userPass == null) {
             return 0;
         }
 
-        if (hrService.loginHR(mobile, password)) {
+        if (hrService.loginHR(userName, userPass)) {
+System.out.println("hr--->"+hrService.getHRByMobile(userName));
 
-            httpSession.setAttribute("hr", hrService.getHRByMobile(mobile));
+            httpSession.setAttribute("hr", hrService.getHRByMobile(userName));
+            System.out.println(httpSession.getAttribute("hr"));
             return 1;
         }
         return 0;
@@ -183,12 +193,20 @@ public class HRController extends BaseController{
      */
     @PostMapping("/hr/info/update")
     public String updateInfo(HttpServletRequest request,
-                             @RequestParam("hrMobile") String mobile,
+                            /* @RequestParam("hrMobile") String mobile,
                              @RequestParam("hrPassword") String password,
                              @RequestParam("hrName") String name,
                              @RequestParam("hrEmail") String email,
                              @RequestParam("description") String description,
-                             @RequestParam("departmentId") int departmentId) {
+                             @RequestParam("departmentId") int departmentId*/
+					    		@RequestParam String mobile,
+					            @RequestParam String password,
+					            @RequestParam String name,
+					            @RequestParam String email,
+					            @RequestParam String description,
+					            @RequestParam int departmentId
+    		
+    		) {
 
         int hrId = this.getHRId(request);
 
@@ -225,7 +243,40 @@ public class HRController extends BaseController{
     }
 
 
-
+    /**
+   	 * 图片上传功能
+   	 * 
+   	 * @param multipartFile MultipartFile对象
+   	 * @param session       HttpSession对象 ，获取useId
+   	 * @param map           ModelMap对象，把数据传到前端
+   	 * @return
+   	 */
+   	@PostMapping(path = "/hr/photo")
+   	public String updatePhoto(@RequestParam("file") MultipartFile multipartFile, HttpSession session, ModelMap map) {
+   		String filename = multipartFile.getOriginalFilename();
+   		System.out.println(filename);
+   		int indexOf = filename.lastIndexOf(".");
+   		String substring = filename.substring(indexOf);
+   		String newName = RenamePhoto.renamePhoto() + substring;
+   		System.out.println(newName);
+   	    HREntity hrEntity = (HREntity) session.getAttribute("hr");
+   		Integer userId = hrEntity.getHrId();
+   		File file = null;
+   		try {
+   			file = ResourceUtils.getFile("classpath:");
+   			file = new File(file + "/static/user/image/upload");
+   			if (!file.exists()) {
+   				file.mkdirs();
+   			}
+   			System.out.println(file);
+   			multipartFile.transferTo(new File(file, newName));
+   		} catch (IllegalStateException | IOException e) {
+   			e.printStackTrace();
+   		}
+   		boolean b = hrService.updateImage(userId, newName);
+   		System.out.println(b);
+   		return "redirect:show";
+   	}
 
 
 }

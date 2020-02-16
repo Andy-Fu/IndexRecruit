@@ -16,13 +16,19 @@ import java.util.Date;
 import java.util.List;
 
 public class Verify {
-    private static final String SERVER_URL = "https://api.netease.im/sms/verifycode.action";
+    private static final String 
+    		SERVER_URL = "https://api.netease.im/sms/verifycode.action";
 
 
     private static final String
-            APP_KEY="de6bd7b7d5cdaa24b142880cd7ed031a";
+    		
+    		//APP_KEY="7b965fdb11c6d46650de29023c5af33a";自己
+            APP_KEY="de6bd7b7d5cdaa24b142880cd7ed031a";//原来
     //网易云信分配的密钥，请替换你在管理后台应用下申请的appSecret
-    private static final String APP_SECRET="86cae9945b52";
+    private static final String 
+    
+    		//APP_SECRET="e96b7562a89c";自己
+    		APP_SECRET="86cae9945b52";//原来
 
     private static final String NONCE="1234";
 

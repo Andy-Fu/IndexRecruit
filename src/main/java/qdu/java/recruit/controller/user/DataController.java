@@ -1,6 +1,8 @@
 package qdu.java.recruit.controller.user;
 
 import com.github.pagehelper.PageInfo;
+
+import cn.hongmao.util.RenamePhoto;
 import io.swagger.annotations.Api;
 import javafx.application.Application;
 import net.sf.json.JSONObject;
@@ -8,7 +10,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import qdu.java.recruit.constant.GlobalConst;
 import qdu.java.recruit.controller.BaseController;
 import qdu.java.recruit.entity.*;
@@ -22,6 +28,9 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Enumeration;
 import java.util.List;
@@ -135,20 +144,34 @@ public class DataController extends BaseController {
         UserEntity user = (UserEntity) httpSession.getAttribute("user");
         HREntity hr = (HREntity) httpSession.getAttribute("hr");
 
+       // System.out.println("user"+user.getMobile());
+        
+        //System.out.println("hr"+hr.getHrMobile());
 //        UserEntity user = new UserEntity();
 //        user = userService.getUser(5);
 
+       
+			
+		
         //推荐职位列表
         page = (page < 1 || page > GlobalConst.MAX_PAGE) ? 1 : page;
 
         Map output = new TreeMap();
+        if (user!=null) {
         try {
             List<PositionCompanyBO> posInfo = positionService.recPosition(user, page, limit);
             output.put("posInfo", posInfo);
         } catch (Exception ex) {
             return "out";
         }
-
+        }else {
+        	 try {
+                 List<CompanyEntity> posInfo = positionService.recPosition(hr, page, limit);
+                 output.put("posInfo", posInfo);
+             } catch (Exception ex) {
+                 return "out";
+             }
+		}
         if (user != null) {
             output.put("user", user);
         }
@@ -580,6 +603,43 @@ public class DataController extends BaseController {
 
         return "redirect:/user/login";
     }
+    
+    
+    /**
+   	 * 图片上传功能
+   	 * 
+   	 * @param multipartFile MultipartFile对象
+   	 * @param session       HttpSession对象 ，获取useId
+   	 * @param map           ModelMap对象，把数据传到前端
+   	 * @return
+   	 */
+   	@PostMapping(path = "/user/photo")
+   	public int updatePhoto(@RequestParam("userfile") MultipartFile multipartFile, HttpSession session, ModelMap map) {
+   		System.out.println("图片上传");
+   		String filename = multipartFile.getOriginalFilename();
+   		System.out.println(filename);
+   		int indexOf = filename.lastIndexOf(".");
+   		String substring = filename.substring(indexOf);
+   		String newName = RenamePhoto.renamePhoto() + substring;
+   		System.out.println(newName);
+   	    UserEntity userInfo = (UserEntity) session.getAttribute("user");
+   		Integer userId = userInfo.getUserId();
+   		File file = null;
+   		try {
+   			file = ResourceUtils.getFile("classpath:");
+   			file = new File(file + "/static/user/image/upload");
+   			if (!file.exists()) {
+   				file.mkdirs();
+   			}
+   			System.out.println(file);
+   			multipartFile.transferTo(new File(file, newName));
+   		} catch (IllegalStateException | IOException e) {
+   			e.printStackTrace();
+   		}
+   		boolean b = userService.updateImage(userId, newName);
+   		System.out.println(b);
+   		return 1;
+   	}
 
 
 }

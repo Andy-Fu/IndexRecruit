@@ -9,6 +9,7 @@ public class HREntity {
     private String hrEmail;
     private String description;
     private int departmentId;
+    private String img;
 
     public int getHrId() {
         return hrId;
@@ -65,4 +66,14 @@ public class HREntity {
     public void setDepartmentId(int departmentId) {
         this.departmentId = departmentId;
     }
+
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
+	}
+    
+    
 }

@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>网站名称</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
-          integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-    <script src="../js/jquery.js"></script>
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
+          integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous"> 
+    <script   th:src="@{/js/jquery.js}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
             integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
             crossorigin="anonymous"></script>
@@ -19,6 +19,19 @@
 
     <link rel="stylesheet" type="text/css" href="../css/index.css"/>
     <script src="../js/vue.min.js"></script>
+    
+    <style type="text/css">
+    .upload{
+    display: block;
+    width: 48px;
+    height: 48px;
+    top:0;
+    right:120px;
+    position: absolute;;
+    opacity: 0;
+    } 
+    </style>
+   
 
 </head>
 <body>
@@ -42,10 +55,12 @@
             </ul>
 
             <ul class="clear_fix col-lg-2 " v-else-if="type==='user'">
-                <li><img src="https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=3803332007,2672307128&fm=58" alt=""
+                <li ><img src="https://ss2.baidu.com/6ONYsjip0QIZ8tyhnq/it/u=3803332007,2672307128&fm=58" alt=""
                          class="img-circle" style="width: 48px;height: 48px"></li>
+                        
                 <li>
-
+                             <input id="userfile" type="file" class="upload" accept="image/*" name="file" />
+                            
                     <div class="dropdown">
                         <a id="dLabel" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                             <h6 id="nick">{{person.user.nickname}}</h6>
@@ -66,7 +81,8 @@
                          class="img-circle" style="width: 48px;height: 48px"></li>
                 <li>
 
-
+ <input id="userfile" type="file" class="upload" accept="image/*" name="file" />
+                            
                     <div class="dropdown">
                         <a data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                             <h6>{{person.hr.name}}</h6>
@@ -86,6 +102,7 @@
             </ul>
 
         </div>
+        
         <!--script-->
         <script>
             var header = new Vue({
@@ -166,6 +183,8 @@
                                     <input type="text" class="form-control col-lg-6" id="nickname" name="nickname"
                                            placeholder="输入昵称">
                                 </div>
+                                
+                                
                             </div>
 
                             <div class=" col-lg-4 l">
@@ -419,7 +438,7 @@
                 </div>
             </div>
         </div>
-
+  
     </div>
     <script src="/js/user_info.js"></script>
 </div>

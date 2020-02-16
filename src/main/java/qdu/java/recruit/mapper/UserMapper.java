@@ -29,5 +29,14 @@ public interface UserMapper {
 
     @Select("select * from user where mobile = #{mobile} limit 1")
     UserEntity getUserByMobile(@Param("mobile") String moblie);
+
+		/**
+	 * 根据用户id修改头像(图片)
+	 * @param userId 用户id
+	 * @param image
+	 * @return 影响行数
+	 */
+    @Update("UPDATE user SET img=#{image} WHERE userId=#{userId}")
+	public int updateImage(@Param("userId") Integer userId, @Param("image") String image);
 }
 

@@ -13,4 +13,13 @@ public interface HRService {
     boolean loginHR(String mobile, String password);
 
     HREntity getHRByMobile(String mobile);
+
+	/**
+	 * 根据用户id修改头像(图片)
+	 * 
+	 * @param userId 用户id
+	 * @param image
+	 * @return 影响行数
+	 */
+	public boolean updateImage(Integer userId, String image);
 }

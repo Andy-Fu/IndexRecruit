@@ -7,7 +7,7 @@ spring:
       name: recruit
       url: jdbc:mysql://localhost:3306/recruit?characterEncoding=utf8&useSSL=false
       username: root
-      password: 123456
+      password: 
 # 使用druid数据源
       type: com.alibaba.druid.pool.DruidDataSource
       driver-class-name: com.mysql.jdbc.Driver
@@ -50,3 +50,15 @@ mybatis:
   # 实体类所在包
   type-aliases-package: qdu.java.recruit.entity
 
+
+
+#文件上传
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 0
+      max-file-size: 50MB
+      max-request-size: 100MB
+      resolve-lazily: false
+        
+ 

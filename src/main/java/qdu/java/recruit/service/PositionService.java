@@ -1,6 +1,9 @@
 package qdu.java.recruit.service;
 
 import com.github.pagehelper.PageInfo;
+
+import qdu.java.recruit.entity.CompanyEntity;
+import qdu.java.recruit.entity.HREntity;
 import qdu.java.recruit.entity.PositionEntity;
 import qdu.java.recruit.entity.UserEntity;
 import qdu.java.recruit.pojo.PositionCompanyBO;
@@ -79,5 +82,7 @@ public interface PositionService {
     int updatePositionState(int statePub, int posId);
 
     int savePosition(PositionEntity positionEntity);
+
+	List<CompanyEntity> recPosition(HREntity hr, int page, int limit);
 
 }

@@ -1,6 +1,22 @@
 var url_type = GetQueryString("type");
 
 $(document).ready(function () {
+	 $('input[type="file"]').on('change',doupload);
+	 
+	 function doupload() {
+		alert("upaload")
+	}
+	 /**
+	   $("input#userfile").change(function (){
+    		 
+    		 alert("aa")
+    		 
+    	 })
+	  */
+	 	
+	
+	
+	
     $.ajax({
         url: "http://localhost:8080/user/info",
         type: "post",
@@ -180,6 +196,9 @@ function GetQueryString(name) {
         return unescape(r[2]);
     return null;
 }
+
+
+
 
 var content = new Vue({
     el: '#vue-dom',

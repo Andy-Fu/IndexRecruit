@@ -48,7 +48,10 @@ public interface HRMapper {
             "values(#{hrMobile},#{hrPassword},#{hrName},#{hrEmail},#{description},#{departmentId})"})
     int saveHR(HREntity hrEntity);
 
-    @Select("select * from hr where hrMobile = #{hrMobile} limit 1")
-    HREntity getHRByMobile(@Param("mobile") String moblie);
+    @Select("select * from hr where hrMobile = #{moblie} limit 1")
+    HREntity getHRByMobile(String moblie);
+    
+    @Update("UPDATE user SET img=#{image} WHERE userId=#{userId}")
+	public int updateImage(@Param("userId") Integer userId,  String image);
 
 }

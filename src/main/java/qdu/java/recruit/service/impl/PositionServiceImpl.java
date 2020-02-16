@@ -5,7 +5,10 @@ import com.github.pagehelper.PageInfo;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
+
+import qdu.java.recruit.entity.CompanyEntity;
 import qdu.java.recruit.entity.DepartmentEntity;
+import qdu.java.recruit.entity.HREntity;
 import qdu.java.recruit.entity.PositionEntity;
 import qdu.java.recruit.entity.UserEntity;
 import qdu.java.recruit.mapper.CompanyMapper;
@@ -26,6 +29,8 @@ public class PositionServiceImpl implements PositionService {
 
     @Resource
     private PositionMapper positionMapper;
+    @Resource
+    private CompanyMapper companyMapper;
 
 
     /**
@@ -164,6 +169,28 @@ public class PositionServiceImpl implements PositionService {
     public int savePosition(PositionEntity positionEntity) {
         return positionMapper.savePosition(positionEntity);
     }
+
+	@Override
+	public List<CompanyEntity> recPosition(HREntity hr, int page, int limit) {
+		// TODO Auto-generated method stub
+		
+        //所有职位列表
+        List<CompanyEntity> recList = new ArrayList<>();
+        recList = companyMapper.listPosAll();
+
+     
+        //返回推荐职位ArrayList
+      
+
+//        PageHelper.startPage(page,limit);
+//        PageInfo<PositionCompanyBO> pageInfo = new PageInfo<>(recList);       0-6 6-12 12-18
+
+        //(p-1)*6 6p
+        LOGGER.debug("Exit recPosition method");
+
+        return recList.subList(limit * page - limit, limit * page);
+		
+	}
 
 
 }

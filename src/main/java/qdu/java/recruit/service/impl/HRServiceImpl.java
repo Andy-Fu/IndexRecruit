@@ -68,18 +68,31 @@ public class HRServiceImpl implements HRService {
     public boolean loginHR(String mobile, String password) {
 
         String passwordDB = HRMapper.getHRByMobile(mobile).getHrPassword();
+		
+        
+		  System.out.println( "passwordDB"+passwordDB+"---->password="+password); 
+		  try {
+		  System.out.println("加密输入密码"+this.EncodingByMd5(password)); 
+		  } catch(NoSuchAlgorithmException e1) { // TODO Auto-generated catch block
+		  e1.printStackTrace(); 
+		  } catch (UnsupportedEncodingException e1) {
+			  // TODO Auto-generated catch block 
+			  e1.printStackTrace(); }
+		 
 
         try {
             if (this.EncodingByMd5(password).equals(passwordDB)) {
+            	//System.out.println("true  true");
                 return true;
-            }
+            }else {
+				return false;
+			}
         } catch (NoSuchAlgorithmException e) {
             System.out.println("md5加密出错");
         } catch (UnsupportedEncodingException e) {
             System.out.println("编码转化错误");
-        } finally {
-            return false;
-        }
+        } 
+        return false;
     }
 
     @Override
@@ -99,6 +112,12 @@ public class HRServiceImpl implements HRService {
         String encStr = base64en.encode(md5.digest(str.getBytes("utf-8")));
         return encStr;
     }
+
+	@Override
+	public boolean updateImage(Integer userId, String image) {
+		// TODO Auto-generated method stub
+		return HRMapper.updateImage(userId, image) > 0;
+	}
 
 
 }

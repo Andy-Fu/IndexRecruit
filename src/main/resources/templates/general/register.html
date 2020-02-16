@@ -8,6 +8,11 @@
     <script type="text/javascript" src="/sign_up/js/jquery.min.js" ></script>
     <script src="/sign_up/js/sweetalert.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/sign_up/css/sweetalert.css">
+    
+    
+ <!--        <script type="text/javascript">									 
+	
+</script> -->
 </head>
 <body>
 <section class="container">
@@ -25,8 +30,9 @@
 
                     <div class="phone-var">
 
-                        <input type="text" name="code" id="code" class="inpt" required="" placeholder="验证码" maxlength="4">
-                        <input type="button" value="获取验证码" class="submit" id="send_code" onclick="phone_varify_send();">
+                        <input type="text" name="code" id="code" class="inpt" required="" placeholder="验证码" maxlength="6">
+                        <input type="button" value="获取验证码" class="submit" id=send_code id="send_code" onclick="getCode();">
+                       
                     </div>
                     <div class="submit-wrap">
                         <input type="button" value="下一步" class="submit" id ="submit"  onclick="phone_varify_code();return false;">

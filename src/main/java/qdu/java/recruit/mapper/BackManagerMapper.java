@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 
 public interface BackManagerMapper {
-    @Select("SELECT COUNT(*) FROM `admin` WHERE userid = #{userid} AND password = md5(#{password})")
+    @Select("SELECT COUNT(*) FROM `admin` WHERE userid = #{userid} AND password = #{password}")
     Integer backLogin(@Param("userid") Long userid,@Param("password") String password);
 
     @Select("SELECT COUNT(*) AS 'usernum',`province` AS 'area' FROM `user` GROUP BY `province`")

@@ -12,5 +12,15 @@ public interface UserService {
 
     boolean loginUser(String mobile, String password);
 
+	/**
+	 * 根据用户id修改头像(图片)
+	 * 
+	 * @param userId 用户id
+	 * @param image
+	 * @return 影响行数
+	 */
+	public boolean updateImage(Integer userId, String image);
+
     UserEntity getUserByMobile(String mobile);
+    
 }

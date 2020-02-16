@@ -17,6 +17,7 @@ public class UserEntity {
     private int graYear;
     private String major;
     private int dirDesire;
+    private String img;
 
     public String getMobile() { return mobile; }
 
@@ -133,4 +134,13 @@ public class UserEntity {
     public void setDirDesire(int dirDesire) {
         this.dirDesire = dirDesire;
     }
+
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
+	}
+    
 }
